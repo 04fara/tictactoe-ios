@@ -12,8 +12,8 @@ Built using XCode 13.1 (Swift 5.5, for iOS 13.0 or later).
 
 ### TODO:
 - [x] Implement Views;
-- [ ] Implement MVVM;
-- [ ] Implement game logic;
+- [x] Implement MVVM;
+- [x] Implement game logic;
 - [ ] Implement AI behavior;
 - [ ] Utilize DI (Dependency Injection);
 - [ ] Cover with tests;

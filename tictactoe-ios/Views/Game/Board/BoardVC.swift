@@ -6,24 +6,16 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class BoardVC: UIViewController {
+    weak var boardVM: BoardVM?
+    var makeMove: ((IndexPath) -> ())?
+    private let disposeBag: DisposeBag = .init()
+
     private var cellSize: CGSize!
     private var cellSpacing: CGFloat!
-
-    private var turn: Marker = .circle
-    private var cellValues: [[Marker]] = {
-        var arr: [[Marker]] = []
-        for i in 0..<3 {
-            var row: [Marker] = []
-            for j in 0..<3 {
-                row.append(.none)
-            }
-            arr.append(row)
-        }
-
-        return arr
-    }()
 
     override func loadView() {
         let view = BoardView()
@@ -65,16 +57,21 @@ extension BoardVC: UICollectionViewDelegateFlowLayout {
 
 extension BoardVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let cell = collectionView.cellForItem(at: indexPath) as? BoardCollectionViewCell
+        var shouldSelect = true
+        collectionView.visibleCells.forEach { cell in
+            if !cell.contentView.isUserInteractionEnabled {
+                shouldSelect = false
 
-        return cell?.markerView.type == Marker.none
+                return
+            }
+        }
+
+        return shouldSelect
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-        let cell = collectionView.cellForItem(at: indexPath) as? BoardCollectionViewCell
-        cell?.markerView.type = turn
-        turn = turn == .circle ? .cross : .circle
+        makeMove?(indexPath)
     }
 }
 
@@ -92,7 +89,9 @@ extension BoardVC: UICollectionViewDataSource {
             withReuseIdentifier: String(describing: BoardCollectionViewCell.self),
             for: indexPath
         ) as! BoardCollectionViewCell
-        cell.configure()
+
+        let cellVM = boardVM?.getCellVM(at: indexPath)
+        cell.configure(cellVM)
 
         return cell
     }

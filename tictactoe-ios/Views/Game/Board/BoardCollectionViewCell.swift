@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class BoardCollectionViewCell: UICollectionViewCell {
+    weak var cellVM: CellVM?
+    private var disposeBag: DisposeBag = .init()
+
     let markerView: MarkerView = {
         let markerView = MarkerView()
         markerView.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +34,11 @@ class BoardCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func prepareForReuse() {
+        disposeBag = .init()
+        cellVM = nil
+    }
 }
 
 extension BoardCollectionViewCell {
@@ -48,7 +58,18 @@ extension BoardCollectionViewCell {
         ])
     }
 
-    func configure() {
+    func configure(_ cellVM: CellVM?) {
+        self.cellVM = cellVM
 
+        bind()
+    }
+
+    private func bind() {
+        cellVM?.marker
+            .bind { [weak self] in self?.markerView.type = $0 }
+            .disposed(by: disposeBag)
+        cellVM?.strokeColor
+            .bind { [weak self] in self?.markerView.markerColor = $0 }
+            .disposed(by: disposeBag)
     }
 }

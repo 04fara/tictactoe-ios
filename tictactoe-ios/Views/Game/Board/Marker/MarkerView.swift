@@ -32,12 +32,26 @@ class MarkerView: UIView {
 
     private var sublayer: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.strokeColor = UIColor.white.cgColor
         layer.fillColor = UIColor.clear.cgColor
         layer.lineWidth = 10
 
         return layer
     }()
+
+    var markerColor: MarkerColor = .normal {
+        didSet {
+            let color: UIColor
+            switch markerColor {
+            case .normal:
+                color = .label
+            case .winner:
+                color = .systemGreen
+            case .disabled:
+                color = .systemGray
+            }
+            sublayer.strokeColor = color.resolvedColor(with: traitCollection).cgColor
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
