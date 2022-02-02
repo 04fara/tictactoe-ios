@@ -9,19 +9,41 @@
 /* Begin PBXBuildFile section */
 		418E21E827AAE336006895D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E21E727AAE336006895D1 /* AppDelegate.swift */; };
 		418E21EA27AAE336006895D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E21E927AAE336006895D1 /* SceneDelegate.swift */; };
-		418E21EC27AAE336006895D1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E21EB27AAE336006895D1 /* ViewController.swift */; };
 		418E21F127AAE338006895D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 418E21F027AAE338006895D1 /* Assets.xcassets */; };
 		418E21F427AAE338006895D1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 418E21F227AAE338006895D1 /* LaunchScreen.storyboard */; };
+		418E221127AAE553006895D1 /* MainMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220127AAE553006895D1 /* MainMenuView.swift */; };
+		418E221227AAE553006895D1 /* MainMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220227AAE553006895D1 /* MainMenuVC.swift */; };
+		418E221327AAE553006895D1 /* CustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220427AAE553006895D1 /* CustomView.swift */; };
+		418E221427AAE553006895D1 /* RoundedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220527AAE553006895D1 /* RoundedView.swift */; };
+		418E221527AAE553006895D1 /* NavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220627AAE553006895D1 /* NavigationVC.swift */; };
+		418E221627AAE553006895D1 /* BoardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220927AAE553006895D1 /* BoardVC.swift */; };
+		418E221727AAE553006895D1 /* BoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220A27AAE553006895D1 /* BoardView.swift */; };
+		418E221827AAE553006895D1 /* MarkerColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220C27AAE553006895D1 /* MarkerColor.swift */; };
+		418E221927AAE553006895D1 /* MarkerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220D27AAE553006895D1 /* MarkerView.swift */; };
+		418E221A27AAE553006895D1 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220E27AAE553006895D1 /* Marker.swift */; };
+		418E221B27AAE553006895D1 /* BoardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E220F27AAE553006895D1 /* BoardCollectionViewCell.swift */; };
+		418E221C27AAE553006895D1 /* GameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E221027AAE553006895D1 /* GameVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		418E21E427AAE336006895D1 /* tictactoe-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tictactoe-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		418E21E727AAE336006895D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		418E21E927AAE336006895D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		418E21EB27AAE336006895D1 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		418E21F027AAE338006895D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		418E21F327AAE338006895D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		418E21F527AAE338006895D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		418E220127AAE553006895D1 /* MainMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
+		418E220227AAE553006895D1 /* MainMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuVC.swift; sourceTree = "<group>"; };
+		418E220427AAE553006895D1 /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
+		418E220527AAE553006895D1 /* RoundedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedView.swift; sourceTree = "<group>"; };
+		418E220627AAE553006895D1 /* NavigationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationVC.swift; sourceTree = "<group>"; };
+		418E220927AAE553006895D1 /* BoardVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardVC.swift; sourceTree = "<group>"; };
+		418E220A27AAE553006895D1 /* BoardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardView.swift; sourceTree = "<group>"; };
+		418E220C27AAE553006895D1 /* MarkerColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerColor.swift; sourceTree = "<group>"; };
+		418E220D27AAE553006895D1 /* MarkerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkerView.swift; sourceTree = "<group>"; };
+		418E220E27AAE553006895D1 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
+		418E220F27AAE553006895D1 /* BoardCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardCollectionViewCell.swift; sourceTree = "<group>"; };
+		418E221027AAE553006895D1 /* GameVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,8 +77,8 @@
 			isa = PBXGroup;
 			children = (
 				418E21FD27AAE389006895D1 /* Views */,
-				418E21FC27AAE381006895D1 /* Resources */,
 				418E21FB27AAE37C006895D1 /* App */,
+				418E21FC27AAE381006895D1 /* Resources */,
 			);
 			path = "tictactoe-ios";
 			sourceTree = "<group>";
@@ -83,9 +105,60 @@
 		418E21FD27AAE389006895D1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				418E21EB27AAE336006895D1 /* ViewController.swift */,
+				418E220327AAE553006895D1 /* Shared */,
+				418E220727AAE553006895D1 /* Game */,
+				418E220027AAE553006895D1 /* MainMenu */,
+				418E220627AAE553006895D1 /* NavigationVC.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		418E220027AAE553006895D1 /* MainMenu */ = {
+			isa = PBXGroup;
+			children = (
+				418E220127AAE553006895D1 /* MainMenuView.swift */,
+				418E220227AAE553006895D1 /* MainMenuVC.swift */,
+			);
+			path = MainMenu;
+			sourceTree = "<group>";
+		};
+		418E220327AAE553006895D1 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				418E220427AAE553006895D1 /* CustomView.swift */,
+				418E220527AAE553006895D1 /* RoundedView.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		418E220727AAE553006895D1 /* Game */ = {
+			isa = PBXGroup;
+			children = (
+				418E220827AAE553006895D1 /* Board */,
+				418E221027AAE553006895D1 /* GameVC.swift */,
+			);
+			path = Game;
+			sourceTree = "<group>";
+		};
+		418E220827AAE553006895D1 /* Board */ = {
+			isa = PBXGroup;
+			children = (
+				418E220B27AAE553006895D1 /* Marker */,
+				418E220F27AAE553006895D1 /* BoardCollectionViewCell.swift */,
+				418E220A27AAE553006895D1 /* BoardView.swift */,
+				418E220927AAE553006895D1 /* BoardVC.swift */,
+			);
+			path = Board;
+			sourceTree = "<group>";
+		};
+		418E220B27AAE553006895D1 /* Marker */ = {
+			isa = PBXGroup;
+			children = (
+				418E220C27AAE553006895D1 /* MarkerColor.swift */,
+				418E220D27AAE553006895D1 /* MarkerView.swift */,
+				418E220E27AAE553006895D1 /* Marker.swift */,
+			);
+			path = Marker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,8 +231,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				418E21EC27AAE336006895D1 /* ViewController.swift in Sources */,
+				418E221627AAE553006895D1 /* BoardVC.swift in Sources */,
+				418E221827AAE553006895D1 /* MarkerColor.swift in Sources */,
+				418E221227AAE553006895D1 /* MainMenuVC.swift in Sources */,
+				418E221927AAE553006895D1 /* MarkerView.swift in Sources */,
+				418E221427AAE553006895D1 /* RoundedView.swift in Sources */,
 				418E21E827AAE336006895D1 /* AppDelegate.swift in Sources */,
+				418E221B27AAE553006895D1 /* BoardCollectionViewCell.swift in Sources */,
+				418E221327AAE553006895D1 /* CustomView.swift in Sources */,
+				418E221127AAE553006895D1 /* MainMenuView.swift in Sources */,
+				418E221A27AAE553006895D1 /* Marker.swift in Sources */,
+				418E221727AAE553006895D1 /* BoardView.swift in Sources */,
+				418E221527AAE553006895D1 /* NavigationVC.swift in Sources */,
+				418E221C27AAE553006895D1 /* GameVC.swift in Sources */,
 				418E21EA27AAE336006895D1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
