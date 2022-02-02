@@ -40,12 +40,12 @@
 /* Begin PBXFileReference section */
 		0159262993B768CB9828773E /* Pods-tictactoe-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tictactoe-ios.release.xcconfig"; path = "Target Support Files/Pods-tictactoe-ios/Pods-tictactoe-ios.release.xcconfig"; sourceTree = "<group>"; };
 		10F96862478003DADDE62A5E /* Pods-tictactoe-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tictactoe-ios.debug.xcconfig"; path = "Target Support Files/Pods-tictactoe-ios/Pods-tictactoe-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		414328F727AAF11A00658F63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		418E21E427AAE336006895D1 /* tictactoe-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tictactoe-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		418E21E727AAE336006895D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		418E21E927AAE336006895D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		418E21F027AAE338006895D1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		418E21F327AAE338006895D1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		418E21F527AAE338006895D1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		418E220127AAE553006895D1 /* MainMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuView.swift; sourceTree = "<group>"; };
 		418E220227AAE553006895D1 /* MainMenuVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainMenuVC.swift; sourceTree = "<group>"; };
 		418E220427AAE553006895D1 /* CustomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomView.swift; sourceTree = "<group>"; };
@@ -136,7 +136,7 @@
 			children = (
 				418E21F027AAE338006895D1 /* Assets.xcassets */,
 				418E21F227AAE338006895D1 /* LaunchScreen.storyboard */,
-				418E21F527AAE338006895D1 /* Info.plist */,
+				414328F727AAF11A00658F63 /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -231,7 +231,6 @@
 				10F96862478003DADDE62A5E /* Pods-tictactoe-ios.debug.xcconfig */,
 				0159262993B768CB9828773E /* Pods-tictactoe-ios.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -516,7 +515,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "tictactoe-ios/Info.plist";
+				INFOPLIST_FILE = "tictactoe-ios/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -545,7 +544,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "tictactoe-ios/Info.plist";
+				INFOPLIST_FILE = "tictactoe-ios/Resources/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
