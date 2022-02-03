@@ -241,8 +241,8 @@
 		418E222627AAECCA006895D1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				418E222727AAECCA006895D1 /* BoardVM.swift */,
 				418E222827AAECCA006895D1 /* GameVM.swift */,
+				418E222727AAECCA006895D1 /* BoardVM.swift */,
 				418E222927AAECCA006895D1 /* CellVM.swift */,
 			);
 			path = ViewModels;

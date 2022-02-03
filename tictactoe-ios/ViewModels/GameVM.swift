@@ -38,24 +38,7 @@ class GameVM {
 extension GameVM {
     @discardableResult
     func makeMove(at indexPath: IndexPath) -> Bool? {
-        switch game.makeMove(at: indexPath) {
-        case .success(let moveResult):
-            result.onNext(game.status.result.rawValue)
-            currentTurn.onNext(generateStatus(from: game.status))
-
-            if let player = game.board.getCell(at: indexPath).player {
-                let marker: Marker = player == .circle ? .circle : .cross
-                boardVM.updateCellMarker(at: indexPath, with: marker)
-            }
-
-            if let positions = moveResult {
-                boardVM.highlightCellMarkers(at: positions)
-            }
-
-            return true
-        case .failure(let error):
-            print(error.localizedDescription)
-
+        if let error = game.makeMove(at: indexPath) {
             switch error {
             case .gameFinished, .noAvailableCells:
                 return nil
@@ -63,6 +46,25 @@ extension GameVM {
                 return false
             }
         }
+
+        result.onNext(game.status.result.rawValue)
+        currentTurn.onNext(generateStatus(from: game.status))
+
+        if let player = game.board.getCell(at: indexPath).player {
+            let marker: Marker = player == .circle ? .circle : .cross
+            boardVM.updateCellMarker(at: indexPath, with: marker)
+        }
+
+        switch game.status.result {
+        case .win, .draw:
+            guard let winnerCombo = game.status.winnerCombo else { return false }
+
+            boardVM.highlightCellMarkers(at: winnerCombo)
+        default:
+            break
+        }
+
+        return true
     }
 
     func reset() {

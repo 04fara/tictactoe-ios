@@ -18,8 +18,8 @@ class Game {
 }
 
 extension Game {
-    func makeMove(at position: IndexPath) -> Result<[IndexPath]?, TicTacToeError> {
-        guard status.result == .ongoing else { return .failure(.gameFinished) }
+    func makeMove(at position: IndexPath) -> TicTacToeError? {
+        guard status.result == .ongoing else { return .gameFinished }
 
         let move = Move(at: position, with: status.currentTurn)
         switch board.makeMove(move) {
@@ -35,9 +35,9 @@ extension Game {
                 status.winnerCombo = []
             }
 
-            return .success(status.winnerCombo)
+            return nil
         case .failure(let error):
-            return .failure(error)
+            return error
         }
     }
 
