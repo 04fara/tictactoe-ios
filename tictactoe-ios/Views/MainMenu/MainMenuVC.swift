@@ -10,7 +10,8 @@ import UIKit
 class MainMenuVC: UIViewController {
     override func loadView() {
         let view = MainMenuView()
-        view.newGameButton.addTarget(self, action: #selector(startNewGame), for: .touchUpInside)
+        view.newGameLocalButton.addTarget(self, action: #selector(startNewGame(_:)), for: .touchUpInside)
+        view.newGameAIButton.addTarget(self, action: #selector(startNewGame(_:)), for: .touchUpInside)
 
         self.view = view
     }
@@ -23,8 +24,18 @@ class MainMenuVC: UIViewController {
 }
 
 extension MainMenuVC {
-    @objc private func startNewGame() {
-        let gameVC = GameVC()
-        navigationController?.pushViewController(gameVC, animated: true)
+    @objc private func startNewGame(_ sender: UIButton) {
+        guard let title = sender.titleLabel?.text else { return }
+
+        let vc: UIViewController
+        switch title {
+        case "New game (Local)":
+            vc = GameVC(for: .local)
+        case "New game (AI)":
+            vc = AIDifficultyVC()
+        default:
+            return
+        }
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

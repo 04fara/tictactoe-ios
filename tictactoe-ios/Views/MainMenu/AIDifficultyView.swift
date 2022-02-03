@@ -1,13 +1,13 @@
 //
-//  MainMenuView.swift
+//  AIDifficultyView.swift
 //  tictactoe-ios
 //
-//  Created by Farid Kopzhassarov on 02/02/2022.
+//  Created by F K on 02/02/2022.
 //
 
 import UIKit
 
-class MainMenuView: CustomView {
+class AIDifficultyView: CustomView {
     let containerView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -18,12 +18,14 @@ class MainMenuView: CustomView {
         return stackView
     }()
 
-    lazy var newGameLocalButton: UIButton = getNewGameButton(for: "Local")
-    lazy var newGameAIButton: UIButton = getNewGameButton(for: "AI")
+    lazy var easyButton: UIButton = getDifficultyButton(for: "Easy")
+    lazy var mediumButton: UIButton = getDifficultyButton(for: "Medium")
+    lazy var hardButton: UIButton = getDifficultyButton(for: "Hard")
 
     override internal func setupView() {
-        containerView.addArrangedSubview(newGameLocalButton)
-        containerView.addArrangedSubview(newGameAIButton)
+        containerView.addArrangedSubview(easyButton)
+        containerView.addArrangedSubview(mediumButton)
+        containerView.addArrangedSubview(hardButton)
         addSubview(containerView)
     }
 
@@ -32,17 +34,17 @@ class MainMenuView: CustomView {
             containerView.centerXAnchor.constraint(equalTo: centerXAnchor),
             containerView.centerYAnchor.constraint(equalTo: centerYAnchor),
             containerView.widthAnchor.constraint(equalToConstant: 150),
-            containerView.heightAnchor.constraint(equalToConstant: 110)
+            containerView.heightAnchor.constraint(equalToConstant: 170)
         ])
     }
 }
 
-extension MainMenuView {
-    private func getNewGameButton(for title: String) -> UIButton {
+extension AIDifficultyView {
+    private func getDifficultyButton(for title: String) -> UIButton {
         let button = UIButton(type: .roundedRect)
         button.backgroundColor = .label
         button.setTitleColor(.systemBackground, for: .normal)
-        button.setTitle("New game (\(title))", for: .normal)
+        button.setTitle(title, for: .normal)
         button.layer.cornerRadius = 10
 
         return button

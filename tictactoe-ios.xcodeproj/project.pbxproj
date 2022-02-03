@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1AA66521C57F80C9B5E99870 /* Pods_tictactoe_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3AD8C746567886973618C48 /* Pods_tictactoe_ios.framework */; };
+		414328F927AAF4A400658F63 /* AIDifficultyVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414328F827AAF4A400658F63 /* AIDifficultyVC.swift */; };
+		414328FB27AAF4C800658F63 /* AIDifficultyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414328FA27AAF4C800658F63 /* AIDifficultyView.swift */; };
+		414328FD27AAF66D00658F63 /* GameMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414328FC27AAF66D00658F63 /* GameMode.swift */; };
+		4143290027AB031C00658F63 /* AIBot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414328FF27AB031C00658F63 /* AIBot.swift */; };
 		418E21E827AAE336006895D1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E21E727AAE336006895D1 /* AppDelegate.swift */; };
 		418E21EA27AAE336006895D1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E21E927AAE336006895D1 /* SceneDelegate.swift */; };
 		418E21F127AAE338006895D1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 418E21F027AAE338006895D1 /* Assets.xcassets */; };
@@ -35,12 +39,17 @@
 		418E223227AAECCA006895D1 /* BoardVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E222727AAECCA006895D1 /* BoardVM.swift */; };
 		418E223327AAECCA006895D1 /* GameVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E222827AAECCA006895D1 /* GameVM.swift */; };
 		418E223427AAECCA006895D1 /* CellVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 418E222927AAECCA006895D1 /* CellVM.swift */; };
+		4195D3FC27ABE573009E105F /* Bot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4195D3FB27ABE573009E105F /* Bot.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		0159262993B768CB9828773E /* Pods-tictactoe-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tictactoe-ios.release.xcconfig"; path = "Target Support Files/Pods-tictactoe-ios/Pods-tictactoe-ios.release.xcconfig"; sourceTree = "<group>"; };
 		10F96862478003DADDE62A5E /* Pods-tictactoe-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-tictactoe-ios.debug.xcconfig"; path = "Target Support Files/Pods-tictactoe-ios/Pods-tictactoe-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		414328F727AAF11A00658F63 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		414328F827AAF4A400658F63 /* AIDifficultyVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDifficultyVC.swift; sourceTree = "<group>"; };
+		414328FA27AAF4C800658F63 /* AIDifficultyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIDifficultyView.swift; sourceTree = "<group>"; };
+		414328FC27AAF66D00658F63 /* GameMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMode.swift; sourceTree = "<group>"; };
+		414328FF27AB031C00658F63 /* AIBot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIBot.swift; sourceTree = "<group>"; };
 		418E21E427AAE336006895D1 /* tictactoe-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "tictactoe-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		418E21E727AAE336006895D1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		418E21E927AAE336006895D1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,6 +78,7 @@
 		418E222727AAECCA006895D1 /* BoardVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardVM.swift; sourceTree = "<group>"; };
 		418E222827AAECCA006895D1 /* GameVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameVM.swift; sourceTree = "<group>"; };
 		418E222927AAECCA006895D1 /* CellVM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellVM.swift; sourceTree = "<group>"; };
+		4195D3FB27ABE573009E105F /* Bot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bot.swift; sourceTree = "<group>"; };
 		B3AD8C746567886973618C48 /* Pods_tictactoe_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_tictactoe_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,6 +102,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		414328FE27AB030600658F63 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				4195D3FB27ABE573009E105F /* Bot.swift */,
+				414328FF27AB031C00658F63 /* AIBot.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		418E21DB27AAE336006895D1 = {
 			isa = PBXGroup;
 			children = (
@@ -113,6 +132,7 @@
 		418E21E627AAE336006895D1 /* tictactoe-ios */ = {
 			isa = PBXGroup;
 			children = (
+				414328FE27AB030600658F63 /* Utils */,
 				418E221D27AAECCA006895D1 /* Models */,
 				418E21FD27AAE389006895D1 /* Views */,
 				418E222627AAECCA006895D1 /* ViewModels */,
@@ -155,6 +175,8 @@
 		418E220027AAE553006895D1 /* MainMenu */ = {
 			isa = PBXGroup;
 			children = (
+				414328FA27AAF4C800658F63 /* AIDifficultyView.swift */,
+				414328F827AAF4A400658F63 /* AIDifficultyVC.swift */,
 				418E220127AAE553006895D1 /* MainMenuView.swift */,
 				418E220227AAE553006895D1 /* MainMenuVC.swift */,
 			);
@@ -175,6 +197,7 @@
 			children = (
 				418E220827AAE553006895D1 /* Board */,
 				418E221027AAE553006895D1 /* GameVC.swift */,
+				414328FC27AAF66D00658F63 /* GameMode.swift */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -348,14 +371,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				414328FD27AAF66D00658F63 /* GameMode.swift in Sources */,
 				418E223127AAECCA006895D1 /* Player.swift in Sources */,
+				414328FB27AAF4C800658F63 /* AIDifficultyView.swift in Sources */,
 				418E221627AAE553006895D1 /* BoardVC.swift in Sources */,
+				414328F927AAF4A400658F63 /* AIDifficultyVC.swift in Sources */,
 				418E222D27AAECCA006895D1 /* Game.swift in Sources */,
 				418E221827AAE553006895D1 /* MarkerColor.swift in Sources */,
 				418E223327AAECCA006895D1 /* GameVM.swift in Sources */,
 				418E221227AAE553006895D1 /* MainMenuVC.swift in Sources */,
+				4195D3FC27ABE573009E105F /* Bot.swift in Sources */,
 				418E221927AAE553006895D1 /* MarkerView.swift in Sources */,
 				418E223427AAECCA006895D1 /* CellVM.swift in Sources */,
+				4143290027AB031C00658F63 /* AIBot.swift in Sources */,
 				418E222C27AAECCA006895D1 /* Board.swift in Sources */,
 				418E221427AAE553006895D1 /* RoundedView.swift in Sources */,
 				418E21E827AAE336006895D1 /* AppDelegate.swift in Sources */,

@@ -52,6 +52,27 @@ class GameVC: UIViewController {
 
     private var shouldAnimateTitleChanges: Bool = false
 
+    private let mode: GameMode
+    private let aiBot: AIBot?
+    private var aiTurn: Bool = false
+
+    init(for mode: GameMode) {
+        self.mode = mode
+
+        switch mode {
+        case .aiEasy, .aiMedium, .aiHard:
+            aiBot = .init(withDifficulty: mode.rawValue)
+        default:
+            aiBot = nil
+        }
+
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         view.backgroundColor = .systemBackground
         view.addSubview(boardVC.view)
@@ -95,7 +116,39 @@ extension GameVC {
     private func bind() {
         boardVC.boardVM = gameVM.boardVM
         boardVC.makeMove = { [weak self] indexPath in
-            self?.gameVM.makeMove(at: indexPath)
+            guard let self = self else { return }
+
+            print(self.mode, self.aiTurn)
+            switch self.mode {
+            case .aiEasy, .aiMedium, .aiHard:
+                if self.aiTurn {
+                    print("It's AI turn")
+                    return
+                }
+            default:
+                break
+            }
+
+            CATransaction.begin()
+            CATransaction.setCompletionBlock {
+                guard let aiBot = self.aiBot else { return }
+
+                var madeMove = false
+                while !madeMove {
+                    guard let result = self.gameVM.makeMove(at: aiBot.makeMove())
+                    else {
+                        self.aiTurn = false
+
+                        return
+                    }
+
+                    madeMove = result
+                }
+                self.aiTurn = false
+            }
+            self.gameVM.makeMove(at: indexPath)
+            self.aiTurn = true
+            CATransaction.commit()
         }
 
         gameVM.currentTurn
@@ -152,6 +205,7 @@ extension GameVC {
 
     @objc private func handleResetTap() {
         shouldAnimateTitleChanges = true
+        aiTurn = false
         gameVM.reset()
     }
 }

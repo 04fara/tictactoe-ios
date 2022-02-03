@@ -36,7 +36,8 @@ class GameVM {
 }
 
 extension GameVM {
-    func makeMove(at indexPath: IndexPath) {
+    @discardableResult
+    func makeMove(at indexPath: IndexPath) -> Bool? {
         switch game.makeMove(at: indexPath) {
         case .success(let moveResult):
             result.onNext(game.status.result.rawValue)
@@ -50,8 +51,17 @@ extension GameVM {
             if let positions = moveResult {
                 boardVM.highlightCellMarkers(at: positions)
             }
+
+            return true
         case .failure(let error):
             print(error.localizedDescription)
+
+            switch error {
+            case .gameFinished, .noAvailableCells:
+                return nil
+            default:
+                return false
+            }
         }
     }
 
