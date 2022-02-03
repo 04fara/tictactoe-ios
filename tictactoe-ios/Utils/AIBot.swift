@@ -20,6 +20,7 @@ class AIBot: Bot {
         repeat {
             move = [.random(in: 0..<3), .random(in: 0..<3)]
         } while attemptedMoves.contains(move)
+        attemptedMoves.insert(move)
 
         return move
     }
