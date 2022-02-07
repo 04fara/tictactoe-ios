@@ -5,44 +5,27 @@
 //  Created by Farid Kopzhassarov on 02/02/2022.
 //
 
-import Foundation
-
 class Game {
-    let board: Board
-    private(set) var status: GameStatus
+    private(set) var players: [Player]
+    private(set) var board: Board
+    private(set) var result: GameResult
 
-    init() {
-        board = .init()
-        status = .init()
+    init(with players: [Player]) {
+        // guard players.count == 2 else { throw TicTacToeError.unknown }
+
+        self.players = players
+        board = .init(with: players)
+        result = .ongoing(players[0])
     }
 }
 
 extension Game {
-    func makeMove(at position: IndexPath) -> TicTacToeError? {
-        guard status.result == .ongoing else { return .gameFinished }
-
-        let move = Move(at: position, with: status.currentTurn)
-        switch board.makeMove(move) {
-        case .success(let winnerCombo):
-            switch true {
-            case winnerCombo != nil:
-                status.result = .win
-                status.winnerCombo = winnerCombo
-            case board.hasAvailableCells():
-                status.changeTurn()
-            default:
-                status.result = .draw
-                status.winnerCombo = []
-            }
-
-            return nil
-        case .failure(let error):
-            return error
-        }
+    func makeMove(at position: Int) -> Result<GameResult, TicTacToeError> {
+        return board.makeMove(at: position)
     }
 
     func reset() {
-        board.reset()
-        status.reset()
+        board = .init(with: players)
+        result = .ongoing(players[0])
     }
 }

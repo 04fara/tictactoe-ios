@@ -2,7 +2,7 @@
 //  AIDifficultyView.swift
 //  tictactoe-ios
 //
-//  Created by F K on 02/02/2022.
+//  Created by Farid Kopzhassarov on 02/02/2022.
 //
 
 import UIKit

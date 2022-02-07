@@ -1,5 +1,5 @@
 //
-//  Marker.swift
+//  MarkerType.swift
 //  tictactoe-ios
 //
 //  Created by Farid Kopzhassarov on 02/02/2022.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-enum Marker {
+enum MarkerType {
     case circle
     case cross
     case none
 }
 
-extension Marker {
+extension MarkerType {
     func path(in rect: CGRect) -> UIBezierPath? {
         let path = UIBezierPath()
         switch self {

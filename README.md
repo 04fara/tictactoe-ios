@@ -16,9 +16,11 @@ Built using XCode 13.1 (Swift 5.5, for iOS 13.0 or later).
 - [x] Implement game logic;
 - [x] Implement AI behavior;
 - [ ] Implement different AI behaviors depending on difficulty;
-- [ ] Utilize DI (Dependency Injection);
-- [ ] Cover with tests;
+- [ ] Utilize Interactor design pattern;
+- [ ] Utilize Coordinator design pattern;
+- [ ] Utilize DI (Dependency Injection) design pattern;
 - [ ] Implement data persistence, using CoreData, for statistics collection;
+- [ ] Cover with tests;
 - [ ] Implement two devices multiplayer mode, using MultipeerConnectivity framework.
 
 ## License

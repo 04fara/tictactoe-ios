@@ -24,7 +24,7 @@ private func getLargeTitleView(of navigationController: UINavigationController?)
 }
 
 class GameVC: UIViewController {
-    private let gameVM: GameVM = .init()
+    private let gameVM: GameVM
     private let disposeBag: DisposeBag = .init()
 
     private let boardVC: BoardVC = {
@@ -53,18 +53,10 @@ class GameVC: UIViewController {
     private var shouldAnimateTitleChanges: Bool = false
 
     private let mode: GameMode
-    private let aiBot: AIBot?
-    private var aiTurn: Bool = false
 
-    init(for mode: GameMode) {
+    init(for mode: GameMode, with gameVM: GameVM) {
         self.mode = mode
-
-        switch mode {
-        case .aiEasy, .aiMedium, .aiHard:
-            aiBot = .init(withDifficulty: mode.rawValue)
-        default:
-            aiBot = nil
-        }
+        self.gameVM = gameVM
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -115,55 +107,31 @@ class GameVC: UIViewController {
 extension GameVC {
     private func bind() {
         boardVC.boardVM = gameVM.boardVM
-        boardVC.makeMove = { [weak self] indexPath in
+        boardVC.makeMove = { [weak self] position in
             guard let self = self else { return }
 
-            print(self.mode, self.aiTurn)
             switch self.mode {
             case .aiEasy, .aiMedium, .aiHard:
-                if self.aiTurn {
-                    print("It's AI turn")
-                    return
-                }
+                break
             default:
                 break
             }
 
-            CATransaction.begin()
-            CATransaction.setCompletionBlock {
-                guard let aiBot = self.aiBot else { return }
-
-                var madeMove = false
-                while !madeMove {
-                    guard let result = self.gameVM.makeMove(at: aiBot.makeMove())
-                    else {
-                        self.aiTurn = false
-
-                        return
-                    }
-
-                    madeMove = result
-                }
-                self.aiTurn = false
-            }
-            self.gameVM.makeMove(at: indexPath)
-            self.aiTurn = true
-            CATransaction.commit()
+            self.gameVM.makeMove(at: position)
         }
 
-        gameVM.currentTurn
-            .bind { [weak self] in
-                self?.changeTitle($0, animated: self?.shouldAnimateTitleChanges ?? false)
+        gameVM.status
+            .bind { [weak self] status in
+                self?.changeTitle(status, animated: self?.shouldAnimateTitleChanges ?? false)
                 self?.shouldAnimateTitleChanges = false
             }
             .disposed(by: disposeBag)
 
-        gameVM.result
-            .bind { [weak self] in
-                switch $0 {
-                case "draw":
-                    self?.showResetButton()
-                case "win":
+        // MARK: TODO put aiMove here
+        gameVM.status
+            .bind { [weak self] status in
+                switch status {
+                case "Draw", "X win", "O win":
                     self?.showResetButton()
                 default:
                     self?.hideResetButton()
@@ -205,7 +173,6 @@ extension GameVC {
 
     @objc private func handleResetTap() {
         shouldAnimateTitleChanges = true
-        aiTurn = false
         gameVM.reset()
     }
 }

@@ -7,70 +7,56 @@
 
 import RxSwift
 
-private func generateStatus(from status: GameStatus) -> String {
-    let turn: String
-    switch status.result {
-    case .ongoing:
-        turn = "\(status.currentTurn.rawValue) turn"
-    case .win:
-        turn = "\(status.currentTurn.rawValue) win"
+private func generateStatusFor(result: GameResult) -> String {
+    let title: String
+    switch result {
+    case .ongoing(let player):
+        title = "\(player.marker.rawValue) turn"
+    case .win(let player):
+        title = "\(player.marker.rawValue) win"
     case .draw:
-        turn = "Draw"
+        title = "Draw"
     }
 
-    return turn
+    return title
 }
 
 class GameVM {
     let game: Game
-    let currentTurn: BehaviorSubject<String>
-    let result: BehaviorSubject<String>
     let boardVM: BoardVM
+    let status: BehaviorSubject<String>
 
-    init() {
-        game = .init()
-        currentTurn = .init(value: generateStatus(from: game.status))
-        result = .init(value: game.status.result.rawValue)
+    init(with game: Game) {
+        self.game = game
         boardVM = .init(board: game.board)
+        status = .init(value: generateStatusFor(result: game.result))
     }
 }
 
 extension GameVM {
-    @discardableResult
-    func makeMove(at indexPath: IndexPath) -> Bool? {
-        if let error = game.makeMove(at: indexPath) {
-            switch error {
-            case .gameFinished, .noAvailableCells:
-                return nil
+    func makeMove(at position: Int) {
+        switch game.makeMove(at: position) {
+        case .success(let result):
+            print(result)
+            status.onNext(generateStatusFor(result: result))
+            boardVM.board = game.board
+            boardVM.updateCellMarkerType(at: position)
+
+            switch result {
+            case .win, .draw:
+                boardVM.highlightCellMarkers(at: game.board.analyzer.winCombo ?? [])
             default:
-                return false
+                break
             }
+        case .failure(let error):
+            print(error)
         }
-
-        result.onNext(game.status.result.rawValue)
-        currentTurn.onNext(generateStatus(from: game.status))
-
-        if let player = game.board.getCell(at: indexPath).player {
-            let marker: Marker = player == .circle ? .circle : .cross
-            boardVM.updateCellMarker(at: indexPath, with: marker)
-        }
-
-        switch game.status.result {
-        case .win, .draw:
-            guard let winnerCombo = game.status.winnerCombo else { return false }
-
-            boardVM.highlightCellMarkers(at: winnerCombo)
-        default:
-            break
-        }
-
-        return true
     }
 
     func reset() {
         game.reset()
-        currentTurn.onNext(generateStatus(from: game.status))
-        result.onNext(game.status.result.rawValue)
+        status.onNext(generateStatusFor(result: game.result))
+        boardVM.board = game.board
         boardVM.reset()
     }
 }

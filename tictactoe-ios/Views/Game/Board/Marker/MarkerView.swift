@@ -8,15 +8,15 @@
 import UIKit
 
 class MarkerView: UIView {
-    var type: Marker = .none {
+    var type: MarkerType = .none {
         didSet {
             guard oldValue != type else { return }
 
             switch type {
-            case .none:
-                erase(animated: true)
             case .circle, .cross:
                 draw(animated: true)
+            case .none:
+                erase(animated: true)
             }
         }
     }

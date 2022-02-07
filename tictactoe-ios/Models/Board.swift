@@ -2,70 +2,56 @@
 //  Board.swift
 //  tictactoe-ios
 //
-//  Created by Farid Kopzhassarov on 02/02/2022.
+//  Created by Farid Kopzhassarov on 06/02/2022.
 //
 
-import Foundation
+struct Board {
+    private struct Const {
+        static let rows: Int = 3
+        static let cols: Int = 3
+        static var count: Int { return rows * cols }
+    }
 
-class Board {
-    private var analyzer: BoardAnalyzer
+    let players: [Player]
+    var analyzer: BoardAnalyzer
+    var available: Int
+    var cells: [Cell]
+    var turn: Player {
+        return players[(Const.count - available) % 2]
+    }
 
-    let size: Int = 3
-    private(set) var cells: [[Cell]]
-    private(set) var available: Int
-
-    init() {
+    init(with players: [Player]) {
+        self.players = players
         analyzer = .init()
-        cells = []
-        available = size * size
-
-        for x in 0..<size {
-            var row = [Cell]()
-            for y in 0..<size {
-                let cell = Cell(at: [x, y])
-                row.append(cell)
-            }
-            cells.append(row)
-        }
+        available = Const.count
+        cells = .init(repeating: .empty, count: Const.count)
     }
 }
 
 extension Board {
-    func hasAvailableCells() -> Bool {
-        return available > 0
+    func getCell(at position: Int) -> Cell {
+        return cells[position]
     }
 
-    func getCell(at indexPath: IndexPath) -> Cell {
-        return cells[indexPath.section][indexPath.item]
+    private func isCellEmpty(at position: Int) -> Bool {
+        return getCell(at: position) == .empty
     }
 
-    private func isCellEmpty(at position: IndexPath) -> Bool {
-        return getCell(at: position).isEmpty
-    }
+    mutating func makeMove(at position: Int) -> Result<GameResult, TicTacToeError> {
+        guard analyzer.winCombo == nil || available == 0 else { return .failure(.gameFinished) }
+        guard !turn.isAI else { return .failure(.aiTurn) }
+        guard isCellEmpty(at: position) else { return .failure(.cellOccupied) }
 
-    func makeMove(_ move: Move) -> Result<[IndexPath]?, TicTacToeError> {
-        guard hasAvailableCells() else {
-            return .failure(.noAvailableCells)
+        analyzer.updateScores(after: position, of: turn.marker)
+        cells[position] = .marked(turn.marker)
+
+        switch analyzer.winCombo {
+        case .some:
+            return .success(.win(turn))
+        case .none:
+            available -= 1
+
+            return .success(available > 0 ? .ongoing(turn) : .draw)
         }
-
-        guard isCellEmpty(at: move.position) else {
-            return .failure(.cellOccupied)
-        }
-
-        analyzer.updateScores(after: move)
-        getCell(at: move.position).player = move.player
-        available -= 1
-
-        return .success(analyzer.hasWinner())
-    }
-
-    func reset() {
-        analyzer.reset()
-        cells.forEach { row in
-            row.forEach { cell in
-                cell.reset()
-            }
-        }
-        available = size * size
     }
 }

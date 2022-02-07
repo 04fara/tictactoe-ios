@@ -8,7 +8,7 @@
 // MARK: TODO put messages into TicTacToeError
 enum TicTacToeError: Error {
     case gameFinished
-    case noAvailableCells
     case cellOccupied
+    case aiTurn
     case unknown
 }

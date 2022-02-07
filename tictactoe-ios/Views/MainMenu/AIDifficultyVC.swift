@@ -33,7 +33,10 @@ extension AIDifficultyVC {
 
         navigationItem.title = "Main menu"
 
-        let gameVC = GameVC(for: mode)
+        let players = [Player.human(.circle), Player.human(.cross)]
+        let game = Game(with: players)
+        let gameVM = GameVM(with: game)
+        let gameVC = GameVC(for: .local, with: gameVM)
         navigationController.pushViewController(gameVC, animated: true)
         navigationController.viewControllers.remove(at: 1)
     }

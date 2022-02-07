@@ -65,7 +65,7 @@ extension BoardCollectionViewCell {
     }
 
     private func bind() {
-        cellVM?.marker
+        cellVM?.markerType
             .bind { [weak self] in self?.markerView.type = $0 }
             .disposed(by: disposeBag)
         cellVM?.strokeColor

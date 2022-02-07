@@ -11,7 +11,7 @@ import RxCocoa
 
 class BoardVC: UIViewController {
     weak var boardVM: BoardVM?
-    var makeMove: ((IndexPath) -> ())?
+    var makeMove: ((Int) -> ())?
     private let disposeBag: DisposeBag = .init()
 
     private var cellSize: CGSize!
@@ -71,7 +71,7 @@ extension BoardVC: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
-        makeMove?(indexPath)
+        makeMove?(indexPath.section * 3 + indexPath.item)
     }
 }
 
@@ -90,7 +90,7 @@ extension BoardVC: UICollectionViewDataSource {
             for: indexPath
         ) as! BoardCollectionViewCell
 
-        let cellVM = boardVM?.getCellVM(at: indexPath)
+        let cellVM = boardVM?.getCellVM(at: indexPath.section * 3 + indexPath.item)
         cell.configure(cellVM)
 
         return cell

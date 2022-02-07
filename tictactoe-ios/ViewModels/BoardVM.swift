@@ -8,51 +8,45 @@
 import RxSwift
 
 class BoardVM {
-    let cells: [[CellVM]]
+    var board: Board
+    let cells: [CellVM]
 
     init(board: Board) {
-        var cells: [[CellVM]] = .init()
-        for x in 0..<3 {
-            var row: [CellVM] = .init()
-            for y in 0..<3 {
-                let cell = board.getCell(at: [x, y])
-                let cellVM = CellVM(cell: cell)
-                row.append(cellVM)
-            }
-            cells.append(row)
+        self.board = board
+        var cellsVM: [CellVM] = .init()
+        board.cells.enumerated().forEach {
+            cellsVM.append(.init(cell: $0.element, at: $0.offset))
         }
-        self.cells = cells
+        self.cells = cellsVM
     }
 }
 
 extension BoardVM {
-    func getCellVM(at position: IndexPath) -> CellVM {
-        return cells[position.section][position.item]
+    func getCellVM(at position: Int) -> CellVM {
+        return cells[position]
     }
 
-    func updateCellMarker(at position: IndexPath, with marker: Marker) {
-        getCellVM(at: position).marker.onNext(marker)
+    func updateCellMarkerType(at position: Int) {
+        let markerType: MarkerType
+        switch board.getCell(at: position) {
+        case .marked(let marker):
+            markerType = marker == .circle ? .circle : .cross
+        case .empty:
+            markerType = .none
+        }
+        cells[position].markerType.onNext(markerType)
     }
 
-    func highlightCellMarkers(at positions: [IndexPath]) {
-        cells.forEach { row in
-            row.forEach { cell in
-                let markerColor: MarkerColor
-                if positions.contains(cell.position) {
-                    markerColor = .winner
-                } else {
-                    markerColor = .disabled
-                }
-                cell.strokeColor.onNext(markerColor)
-            }
+    func highlightCellMarkers(at positions: [Int]) {
+        cells.forEach { cell in
+            let markerColor: MarkerColor = positions.contains(cell.position) ? .winner : .disabled
+            cell.strokeColor.onNext(markerColor)
         }
     }
 
     func reset() {
-        cells.forEach { row in
-            row.forEach { cell in
-                cell.reset()
-            }
+        cells.forEach { cell in
+            cell.reset()
         }
     }
 }

@@ -8,29 +8,27 @@
 import RxSwift
 
 class CellVM {
-    let position: IndexPath
-    let marker: BehaviorSubject<Marker>
+    let position: Int
+    let markerType: BehaviorSubject<MarkerType>
     let strokeColor: BehaviorSubject<MarkerColor>
 
-    init(cell: Cell) {
-        position = cell.position
-
-        switch cell.player {
-        case .circle:
-            marker = .init(value: .circle)
-        case .cross:
-            marker = .init(value: .cross)
-        default:
-            marker = .init(value: .none)
+    init(cell: Cell, at position: Int) {
+        self.position = position
+        let markerType: MarkerType
+        switch cell {
+        case .marked(let marker):
+            markerType = marker == .circle ? .circle : .cross
+        case .empty:
+            markerType = .none
         }
-
+        self.markerType = .init(value: markerType)
         strokeColor = .init(value: .normal)
     }
 }
 
 extension CellVM {
     func reset() {
-        marker.onNext(.none)
+        markerType.onNext(.none)
         strokeColor.onNext(.normal)
     }
 }
