@@ -15,7 +15,7 @@ Built using XCode 13.1 (Swift 5.5, for iOS 13.0 or later).
 - [x] Implement MVVM;
 - [x] Implement game logic;
 - [x] Implement AI behavior;
-- [ ] Implement different AI behaviors depending on difficulty;
+- [x] Implement different AI behaviors depending on difficulty;
 - [ ] Utilize Interactor design pattern;
 - [ ] Utilize Coordinator design pattern;
 - [ ] Utilize DI (Dependency Injection) design pattern;

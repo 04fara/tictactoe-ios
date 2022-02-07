@@ -10,6 +10,15 @@ class Game {
     private(set) var board: Board
     private(set) var result: GameResult
 
+    var isFinished: Bool {
+        switch result {
+        case .ongoing:
+            return false
+        case .win, .draw:
+            return true
+        }
+    }
+
     init(with players: [Player]) {
         // guard players.count == 2 else { throw TicTacToeError.unknown }
 
@@ -21,7 +30,14 @@ class Game {
 
 extension Game {
     func makeMove(at position: Int) -> Result<GameResult, TicTacToeError> {
-        return board.makeMove(at: position)
+        switch board.makeMove(at: position) {
+        case .success(let result):
+            self.result = result
+
+            return .success(result)
+        case .failure(let error):
+            return .failure(error)
+        }
     }
 
     func reset() {

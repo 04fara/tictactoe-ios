@@ -55,8 +55,8 @@ class GameVC: UIViewController {
     private let mode: GameMode
 
     init(for mode: GameMode, with gameVM: GameVM) {
-        self.mode = mode
         self.gameVM = gameVM
+        self.mode = mode
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -127,15 +127,9 @@ extension GameVC {
             }
             .disposed(by: disposeBag)
 
-        // MARK: TODO put aiMove here
-        gameVM.status
-            .bind { [weak self] status in
-                switch status {
-                case "Draw", "X win", "O win":
-                    self?.showResetButton()
-                default:
-                    self?.hideResetButton()
-                }
+        gameVM.isFinished
+            .bind { [weak self] isFinished in
+                isFinished ? self?.showResetButton() : self?.hideResetButton()
             }
             .disposed(by: disposeBag)
     }

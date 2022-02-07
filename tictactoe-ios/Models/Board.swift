@@ -39,7 +39,7 @@ extension Board {
 
     mutating func makeMove(at position: Int) -> Result<GameResult, TicTacToeError> {
         guard analyzer.winCombo == nil || available == 0 else { return .failure(.gameFinished) }
-        guard !turn.isAI else { return .failure(.aiTurn) }
+//        guard !(turn is AIPlayer) else { return .failure(.aiTurn) }
         guard isCellEmpty(at: position) else { return .failure(.cellOccupied) }
 
         analyzer.updateScores(after: position, of: turn.marker)
