@@ -9,10 +9,8 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class BoardVC: UIViewController {
-    weak var boardVM: BoardVM?
+class BoardVC: BaseVC<BoardVM> {
     var makeMove: ((Int) -> ())?
-    private let disposeBag: DisposeBag = .init()
 
     private var cellSize: CGSize!
     private var cellSpacing: CGFloat!
@@ -90,7 +88,7 @@ extension BoardVC: UICollectionViewDataSource {
             for: indexPath
         ) as! BoardCollectionViewCell
 
-        let cellVM = boardVM?.getCellVM(at: indexPath.section * 3 + indexPath.item)
+        let cellVM = viewModel.getCellVM(at: indexPath.section * 3 + indexPath.item)
         cell.configure(cellVM)
 
         return cell

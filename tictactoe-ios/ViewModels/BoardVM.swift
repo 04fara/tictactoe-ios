@@ -7,17 +7,17 @@
 
 import RxSwift
 
-class BoardVM {
-    var board: Board
+class BoardVM: BaseVM<BoardInteractor> {
     let cells: [CellVM]
 
-    init(board: Board) {
-        self.board = board
+    override init(interactor: BoardInteractor) {
         var cellsVM: [CellVM] = .init()
-        board.cells.enumerated().forEach {
+        interactor.cells.enumerated().forEach {
             cellsVM.append(.init(cell: $0.element, at: $0.offset))
         }
         self.cells = cellsVM
+
+        super.init(interactor: interactor)
     }
 }
 
@@ -28,7 +28,7 @@ extension BoardVM {
 
     func updateCellMarkerType(at position: Int) {
         let markerType: MarkerType
-        switch board.getCell(at: position) {
+        switch interactor.getCell(at: position) {
         case .marked(let marker):
             markerType = marker == .circle ? .circle : .cross
         case .empty:

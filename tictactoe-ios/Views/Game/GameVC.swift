@@ -23,16 +23,8 @@ private func getLargeTitleView(of navigationController: UINavigationController?)
     return label
 }
 
-class GameVC: UIViewController {
-    private let gameVM: GameVM
-    private let disposeBag: DisposeBag = .init()
-
-    private let boardVC: BoardVC = {
-        let boardVC = BoardVC()
-        boardVC.view.translatesAutoresizingMaskIntoConstraints = false
-
-        return boardVC
-    }()
+class GameVC: BaseVC<GameVM> {
+    private let boardVC: BoardVC
 
     private var boardView: BoardView {
         return boardVC.view as! BoardView
@@ -52,13 +44,10 @@ class GameVC: UIViewController {
 
     private var shouldAnimateTitleChanges: Bool = false
 
-    private let mode: GameMode
+    override init(viewModel: GameVM) {
+        boardVC = BoardVC(viewModel: viewModel.boardVM)
 
-    init(for mode: GameMode, with gameVM: GameVM) {
-        self.gameVM = gameVM
-        self.mode = mode
-
-        super.init(nibName: nil, bundle: nil)
+        super.init(viewModel: viewModel)
     }
 
     required init?(coder: NSCoder) {
@@ -85,6 +74,8 @@ class GameVC: UIViewController {
             ])
         }
 
+        boardVC.view.translatesAutoresizingMaskIntoConstraints = false
+
         NSLayoutConstraint.activate([
             boardView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             boardView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -106,28 +97,20 @@ class GameVC: UIViewController {
 
 extension GameVC {
     private func bind() {
-        boardVC.boardVM = gameVM.boardVM
         boardVC.makeMove = { [weak self] position in
             guard let self = self else { return }
 
-            switch self.mode {
-            case .aiEasy, .aiMedium, .aiHard:
-                break
-            default:
-                break
-            }
-
-            self.gameVM.makeMove(at: position)
+            self.viewModel.makeMove(at: position)
         }
 
-        gameVM.status
+        viewModel.status
             .bind { [weak self] status in
                 self?.changeTitle(status, animated: self?.shouldAnimateTitleChanges ?? false)
                 self?.shouldAnimateTitleChanges = false
             }
             .disposed(by: disposeBag)
 
-        gameVM.isFinished
+        viewModel.isFinished
             .bind { [weak self] isFinished in
                 isFinished ? self?.showResetButton() : self?.hideResetButton()
             }
@@ -167,6 +150,6 @@ extension GameVC {
 
     @objc private func handleResetTap() {
         shouldAnimateTitleChanges = true
-        gameVM.reset()
+        viewModel.reset()
     }
 }

@@ -7,6 +7,6 @@
 
 enum GameResult {
     case ongoing(Player)
-    case win(Player)
+    case win(Player, [Int])
     case draw
 }

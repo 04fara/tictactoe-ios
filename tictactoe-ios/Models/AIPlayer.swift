@@ -2,7 +2,7 @@
 //  AIPlayer.swift
 //  tictactoe-ios
 //
-//  Created by F K on 07/02/2022.
+//  Created by Farid Kopzhassarov on 07/02/2022.
 //
 
 enum AIPlayerDifficulty: String {
@@ -11,12 +11,12 @@ enum AIPlayerDifficulty: String {
     case hard = "Hard"
 }
 
-class AIPlayer: Player {
+struct AIPlayer: Player {
+    var marker: Marker
     var difficulty: AIPlayerDifficulty
 
     init(with marker: Marker, difficulty: AIPlayerDifficulty) {
+        self.marker = marker
         self.difficulty = difficulty
-
-        super.init(with: marker)
     }
 }

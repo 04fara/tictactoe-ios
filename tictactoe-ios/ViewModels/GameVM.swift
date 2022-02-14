@@ -12,7 +12,7 @@ private func generateStatusFor(result: GameResult) -> String {
     switch result {
     case .ongoing(let player):
         title = "\(player.marker.rawValue) turn (\(player is AIPlayer ? "AI" : "Human"))"
-    case .win(let player):
+    case .win(let player, _):
         title = "\(player.marker.rawValue) win (\(player is AIPlayer ? "AI" : "Human"))"
     case .draw:
         title = "Draw"
@@ -21,48 +21,51 @@ private func generateStatusFor(result: GameResult) -> String {
     return title
 }
 
-class GameVM {
-    let game: Game
+class GameVM: BaseVM<GameInteractor> {
     let boardVM: BoardVM
     let status: BehaviorSubject<String>
     let isFinished: BehaviorSubject<Bool>
-    var isAITurn: Bool
+    var isAITurn: BehaviorSubject<Bool>
 
-    init(with game: Game) {
-        self.game = game
-        boardVM = .init(board: game.board)
-        status = .init(value: generateStatusFor(result: game.result))
-        isFinished = .init(value: game.isFinished)
-        isAITurn = game.board.turn is AIPlayer
+    override init(interactor: GameInteractor) {
+        let boardInteractor = BoardInteractor(interactor.board)
+        boardVM = .init(interactor: boardInteractor)
+        status = .init(value: generateStatusFor(result: interactor.result))
+        isFinished = .init(value: interactor.isGameFinished)
+        isAITurn = .init(value: interactor.isAITurn)
+
+        super.init(interactor: interactor)
+
+        isAITurn
+            .bind { [weak self] isAITurn in
+                guard isAITurn else { return }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
+                    self?.interactor.isAITurn = false
+                    self?.makeMove()
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
 extension GameVM {
-    func makeMove(at position: Int) {
-        guard !isAITurn else {
-            print("AITurn!")
-            return
-        }
-
-        switch game.makeMove(at: position) {
+    func makeMove(at position: Int? = nil) {
+        switch interactor.turn.makeMove(at: position) {
         case .success(let result):
+            guard let position = interactor.madeMoves.last?.position else { return }
+
             status.onNext(generateStatusFor(result: result))
-            isFinished.onNext(game.isFinished)
-            boardVM.board = game.board
+            isFinished.onNext(interactor.isGameFinished)
             boardVM.updateCellMarkerType(at: position)
 
             switch result {
-            case .win, .draw:
-                boardVM.highlightCellMarkers(at: game.board.analyzer.winCombo ?? [])
-            case .ongoing(let player):
-                isAITurn = player is AIPlayer
-                if let player = player as? AIPlayer,
-                   let position = AIBot.makeMove(on: game.board, with: player.difficulty) {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) { [weak self] in
-                        self?.isAITurn = false
-                        self?.makeMove(at: position)
-                    }
-                }
+            case .win(_, let winCombo):
+                boardVM.highlightCellMarkers(at: winCombo)
+            case .draw:
+                boardVM.highlightCellMarkers(at: [])
+            case .ongoing:
+                isAITurn.onNext(interactor.isAITurn)
             }
         case .failure(let error):
             print(error)
@@ -70,10 +73,10 @@ extension GameVM {
     }
 
     func reset() {
-        game.reset()
-        status.onNext(generateStatusFor(result: game.result))
-        isFinished.onNext(game.isFinished)
-        boardVM.board = game.board
+        interactor.reset()
+        status.onNext(generateStatusFor(result: interactor.result))
+        isFinished.onNext(interactor.isGameFinished)
+        isAITurn.onNext(interactor.isAITurn)
         boardVM.reset()
     }
 }

@@ -29,17 +29,15 @@ extension AIDifficultyVC {
         // MARK: TODO add alert
         guard let navigationController = navigationController,
               let title = sender.titleLabel?.text,
-              let mode = GameMode(rawValue: title),
-              let difficulty = AIPlayerDifficulty(rawValue: title)
+              let mode = GameMode(rawValue: title)
         else { return }
 
         navigationItem.title = "Main menu"
 
-        let players = [Player(with: .circle), AIPlayer(with: .cross, difficulty: difficulty)]
-        let game = Game(with: players)
-        let gameVM = GameVM(with: game)
-        let gameVC = GameVC(for: mode, with: gameVM)
-        navigationController.pushViewController(gameVC, animated: true)
+        let interactor = GameInteractor(mode: mode)
+        let vm = GameVM(interactor: interactor)
+        let vc = GameVC(viewModel: vm)
+        navigationController.pushViewController(vc, animated: true)
         navigationController.viewControllers.remove(at: 1)
     }
 }

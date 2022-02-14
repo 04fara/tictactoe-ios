@@ -30,10 +30,9 @@ extension MainMenuVC {
         let vc: UIViewController
         switch title {
         case "New game (Local)":
-            let players = [Player(with: .circle), Player(with: .cross)]
-            let game = Game(with: players)
-            let gameVM = GameVM(with: game)
-            vc = GameVC(for: .local, with: gameVM)
+            let interactor: GameInteractor = .init(mode: .local)
+            let vm: GameVM = .init(interactor: interactor)
+            vc = GameVC(viewModel: vm)
         case "New game (AI)":
             vc = AIDifficultyVC()
         default:
