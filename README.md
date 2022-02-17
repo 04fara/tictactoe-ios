@@ -1,5 +1,7 @@
 # TicTacToe iOS
 
+![](previews/preview1.webp) ![](previews/preview2.webp)
+
 It is a classic TicTacToe game.
 
 Built using XCode 13.1 (Swift 5.5, for iOS 13.0 or later).
