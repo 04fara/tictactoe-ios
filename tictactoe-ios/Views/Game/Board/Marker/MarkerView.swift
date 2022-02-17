@@ -21,19 +21,29 @@ class MarkerView: UIView {
         }
     }
 
-    private let animation: CABasicAnimation = {
+    private var drawAnimation: CABasicAnimation {
         let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.strokeEnd))
-        animation.timingFunction = .init(name: .easeInEaseOut)
         animation.duration = 0.5
-        animation.fillMode = .forwards
+        animation.timingFunction = .init(name: .easeInEaseOut)
+        animation.fromValue = sublayer.strokeEnd
 
         return animation
-    }()
+    }
+
+    private var eraseAnimation: CABasicAnimation {
+        let animation = CABasicAnimation(keyPath: #keyPath(CAShapeLayer.lineWidth))
+        animation.duration = 0.25
+        animation.timingFunction = .init(name: .easeIn)
+        animation.fromValue = sublayer.lineWidth
+
+        return animation
+    }
 
     private var sublayer: CAShapeLayer = {
         let layer = CAShapeLayer()
         layer.fillColor = UIColor.clear.cgColor
         layer.lineWidth = 10
+        layer.strokeEnd = 0
 
         return layer
     }()
@@ -66,12 +76,12 @@ class MarkerView: UIView {
     func draw(animated: Bool = false) {
         guard let path = type.path(in: frame) else { return }
 
-        if animated {
-            animation.fromValue = 0
-            animation.toValue = 1
-            sublayer.add(animation, forKey: "DrawMarker")
-        }
         sublayer.path = path.cgPath
+        if animated {
+            let animation = drawAnimation
+            sublayer.strokeEnd = 1
+            sublayer.add(animation, forKey: "MarkerStrokeEnd")
+        }
     }
 
     func erase(animated: Bool = false) {
@@ -79,14 +89,15 @@ class MarkerView: UIView {
             CATransaction.begin()
             CATransaction.setCompletionBlock { [weak self] in
                 self?.sublayer.path = nil
+                self?.sublayer.lineWidth = 10
+                self?.sublayer.strokeEnd = 0
                 self?.superview?.isUserInteractionEnabled = true
             }
             superview?.isUserInteractionEnabled = false
-            animation.fromValue = 1
-            animation.toValue = 0
-            sublayer.add(animation, forKey: "EraseMarker")
+            let animation = eraseAnimation
+            sublayer.lineWidth = 0
+            sublayer.add(animation, forKey: "MarkerLineWidth")
             CATransaction.commit()
         }
-        type = .none
     }
 }
